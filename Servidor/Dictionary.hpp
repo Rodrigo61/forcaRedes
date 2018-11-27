@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace Dicionario
+namespace Dictionary
 {
   void init(const string &file_path);
   vector<string> get_all_words();

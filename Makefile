@@ -1,8 +1,8 @@
 CFLAGS = -Wall -g
 
 # Adicione aqui as libs. LIB_CODE = cpps e LIB_HEADER = hpps
-LIB_CODE_SERVIDOR = ./Servidor/Dicionario.cpp
-LIB_HEADER_SERVIDOR = ./Servidor/Dicionario.hpp
+LIB_CODE_SERVIDOR = ./Servidor/Dictionary.cpp
+LIB_HEADER_SERVIDOR = ./Servidor/Dictionary.hpp
 
 LIB_CODE_CLIENTE =
 LIB_HEADER_CLIENTE = 
