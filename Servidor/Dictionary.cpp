@@ -1,6 +1,6 @@
-#include "Dicionario.hpp"
+#include "Dictionary.hpp"
 
-namespace Dicionario
+namespace Dictionary
 {
   
   /*******************/
@@ -15,7 +15,7 @@ namespace Dicionario
     {
       if (!was_init)
       {
-        cerr << "Dicionario está sendo utilizado sem ter sido propriamente iniciado pela funcao init()" << endl;
+        cerr << "Dictionary está sendo utilizado sem ter sido propriamente iniciado pela funcao init()" << endl;
         exit(1);
       }    
     }
