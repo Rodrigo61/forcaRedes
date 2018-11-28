@@ -3,9 +3,9 @@
 namespace protocol
 {
 
-  /*****************************/
-  /** BEGIN: protocol_message **/
-  /*****************************/
+  /**********************************/
+  /** BEGIN: protocol_message class**/
+  /**********************************/
   protocol_message::protocol_message(const string &message)
   {
     msg = message;
@@ -34,6 +34,7 @@ namespace protocol
   string create_init_success_msg() { return "INIT_SUCCESS"; }
   string create_victory_msg() { return "Você adivinhou a palavra!"; }
   string create_restart_msg() { return "RESTART"; }
+  string create_unexpected_msg() {}
 
   string create_already_used_letter_msg(char letter) 
   { 

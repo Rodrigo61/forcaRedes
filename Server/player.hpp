@@ -18,6 +18,9 @@ class player
     game_master::game_state *gs;
 
     void init_game(const string &word, int hp);
+    string new_game_flow(protocol::protocol_message &msg);
+    string try_letter_flow(protocol::protocol_message &msg);
+    string unexpected_msg_flow();
 
   public:
     player();

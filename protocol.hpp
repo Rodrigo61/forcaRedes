@@ -33,7 +33,7 @@ namespace protocol
   string create_init_failure_msg();
   string create_init_success_msg();
   string create_victory_msg();
-  string create_lose_msg();
+  string create_defeat_msg();
   string create_already_used_letter_msg();
   string create_invalid_letter_msg();
   string create_reinit_msg();
@@ -41,5 +41,6 @@ namespace protocol
   string create_right_letter_msg(const string &current_word);
   string create_used_letter_msg();
   string create_wrong_letter_msg();
+  string create_unexpected_msg();
   
 }
