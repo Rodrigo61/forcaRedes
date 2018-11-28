@@ -42,5 +42,6 @@ namespace protocol
   string create_used_letter_msg();
   string create_wrong_letter_msg();
   string create_unexpected_msg();
+  string create_new_game_msg();
   
 }

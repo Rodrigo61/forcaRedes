@@ -3,6 +3,9 @@
 namespace protocol
 {
 
+    enum Bytecode : char {
+        NEWGAME = 1
+    };
   /**********************************/
   /** BEGIN: protocol_message class**/
   /**********************************/
@@ -73,10 +76,10 @@ namespace protocol
     return ss.str();
   }
 
-  string create_new_game_msg(int init_hp, const string &target_word)
+  string create_new_game_msg()
   {
     stringstream ss;
-    ss << "NEW GAME: " << init_hp << "," << target_word;
+    ss << NEWGAME;
     return ss.str();
   }
   
