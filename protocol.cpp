@@ -3,14 +3,35 @@
 namespace protocol
 {
 
+    enum Bytecode : char {
+        NEWGAME = 1
+    };
   /**********************************/
   /** BEGIN: protocol_message class**/
   /**********************************/
+
+  char protocol_message::extract_type(const string &raw_message)
+  {
+    return (char)raw_message[0];
+  }
+
+  string protocol_message::extract_parameter(const string &raw_message)
+  {
+    return string(raw_message.begin() + 1, raw_message.end());
+  }
+
   protocol_message::protocol_message(const string &message)
   {
     msg = message;
   }
-
+  
+  string protocol_message::to_string()
+  {
+    stringstream ss;
+    ss << "Tipo = " << type << " Parametro = " << parameter;
+    return ss.str();
+  }
+  
   bool protocol_message::is_new_game(){}
   bool protocol_message::is_letter_try(){}
   bool protocol_message::is_init_failure(){}
@@ -25,11 +46,13 @@ namespace protocol
   string protocol_message::get_init_word(){}
   int protocol_message::get_init_hp(){}
   string protocol_message::which_type(){}
+  
 
   /***************************/
   /** END: protocol_message **/
   /***************************/
 
+  
   string create_init_failure_msg() { return "INIT_FAILURE"; }
   string create_init_success_msg() { return "INIT_SUCCESS"; }
   string create_victory_msg() { return "Você adivinhou a palavra!"; }
@@ -73,10 +96,10 @@ namespace protocol
     return ss.str();
   }
 
-  string create_new_game_msg(int init_hp, const string &target_word)
+  string create_new_game_msg()
   {
     stringstream ss;
-    ss << "NEW GAME: " << init_hp << "," << target_word;
+    ss << NEWGAME;
     return ss.str();
   }
   

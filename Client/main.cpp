@@ -69,6 +69,6 @@ int connect_to_server(char* ip, int port){
     return sockfd;
 }
 
-void partida_simples(){
+void partida_simples(int connection){
 
 }

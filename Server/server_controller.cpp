@@ -42,7 +42,7 @@ namespace server_controller
       FD_ZERO(&rset);
     }
 
-    string evalute_player_msg(int connfd, char *msg)
+    string evaluate_player_msg(int connfd, char *msg)
     {
       player *p = connfd_to_player[connfd];
       return p->evaluate_msg(msg);
