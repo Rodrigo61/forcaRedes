@@ -1,5 +1,6 @@
 #include "game_master.hpp"
 #include "../protocol.hpp"
+#include "dictionary.hpp"
 
 /**
  * A classe player é usada para representar o jogador cliente dentro do servidor. 

@@ -14,9 +14,9 @@ string player::new_game_flow(protocol::protocol_message &msg)
     return protocol::create_init_failure_msg();
   }
   
-  init_game(msg.get_init_word(), msg.get_init_hp());
-  return protocol::create_init_success_msg();
-  
+  init_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
+
+  return protocol::create_init_success_msg();  
 }
 
 string player::try_letter_flow(protocol::protocol_message &msg)
@@ -32,6 +32,7 @@ string player::try_letter_flow(protocol::protocol_message &msg)
     {
       if (gs->has_won())
       {
+        score++;
         return protocol::create_victory_msg();
       }
       else if (gs->has_lost())
@@ -64,7 +65,6 @@ string player::unexpected_msg_flow()
 {
   return protocol::create_unexpected_msg();
 }
-
 
 string player::evaluate_msg(const string &str_msg)
 {
