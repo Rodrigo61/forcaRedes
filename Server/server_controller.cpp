@@ -8,7 +8,7 @@ namespace server_controller
   namespace
   {
     int listenfd;
-    char buffer[BUFFER_SZ]                  ;
+    char buffer[BUFFER_SZ];
     struct sockaddr_in servaddr;  
     set<int> set_connfd; 
     map<int, player*> connfd_to_player;
@@ -42,10 +42,10 @@ namespace server_controller
       FD_ZERO(&rset);
     }
 
-    void evalute_player_msg(int connfd, const string &msg)
+    void evalute_player_msg(int connfd, char *msg)
     {
       player *p = connfd_to_player[connfd];
-      p->evaluate(msg);
+      p->evaluate_msg(msg);
     }
 
     void erase_player (int connfd)
@@ -69,7 +69,7 @@ namespace server_controller
           }
           else{
             buffer[msg_sz] = 0;
-            string response = evalute_player_msg(buffer);
+            string response = evalute_player_msg(connfd, buffer);
             // Envia ação de resposta do servidor
             write(connfd, response.c_str(), response.size());
           }

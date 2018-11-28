@@ -14,7 +14,8 @@ namespace game_master
   const int CORRECT_LETTER = 0;
   const int USED_LETTER = 1;
   const int WRONG_LETTER = 2;
-
+  const int INIT_HP_DEFAULT = 6;
+  
   class game_state
   {
     private:

@@ -7,28 +7,20 @@ void player::init_game(const string &word, int hp)
 
 player::player() {}
 
-string player::evaluate_msg(const string &str_msg)
+string player::new_game_flow(protocol::protocol_message &msg)
 {
-  protocol::protocol_message msg(str_msg);
-
-  if (!gs->is_in_progress())
+  if (gs->is_in_progress())
   {
-    if (msg.is_new_game())
-    {
-      init_game(msg.get_init_word(), msg.get_init_hp());
-      return protocol::create_init_success_msg();
-    }
-    else
-    {
-      return protocol::create_init_failure_msg();
-    }
+    return protocol::create_init_failure_msg();
   }
   
-  if (!msg.is_letter_try())
-  {
-    return protocol::create_confirmation_msg();
-  }
+  init_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
 
+  return protocol::create_init_success_msg();  
+}
+
+string player::try_letter_flow(protocol::protocol_message &msg)
+{
   string letter = msg.get_tried_letter();
 
   if (game_master::valid_letter(letter))
@@ -40,11 +32,12 @@ string player::evaluate_msg(const string &str_msg)
     {
       if (gs->has_won())
       {
+        score++;
         return protocol::create_victory_msg();
       }
       else if (gs->has_lost())
       {
-        return protocol::create_lose_msg();
+        return protocol::create_defeat_msg();
       }
       else
       {
@@ -59,13 +52,36 @@ string player::evaluate_msg(const string &str_msg)
     {
       return protocol::create_wrong_letter_msg();
     }
-    
+
   }
   else
   {
     return protocol::create_invalid_letter_msg();
   }
   
+}
+
+string player::unexpected_msg_flow()
+{
+  return protocol::create_unexpected_msg();
+}
+
+string player::evaluate_msg(const string &str_msg)
+{
+
+  protocol::protocol_message msg(str_msg);
+
+  if (msg.is_new_game())
+  {
+    return new_game_flow(msg);
+  }
+  
+  if (msg.is_letter_try())
+  {
+    return try_letter_flow(msg);
+  }
+  
+  return unexpected_msg_flow();
 }
 
 

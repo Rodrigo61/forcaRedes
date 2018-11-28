@@ -1,5 +1,6 @@
 #include "game_master.hpp"
 #include "../protocol.hpp"
+#include "dictionary.hpp"
 
 /**
  * A classe player é usada para representar o jogador cliente dentro do servidor. 
@@ -18,6 +19,9 @@ class player
     game_master::game_state *gs;
 
     void init_game(const string &word, int hp);
+    string new_game_flow(protocol::protocol_message &msg);
+    string try_letter_flow(protocol::protocol_message &msg);
+    string unexpected_msg_flow();
 
   public:
     player();
