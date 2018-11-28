@@ -22,5 +22,5 @@ server: ./Server/main.cpp $(LIB_CODE_SERVER) $(LIB_CODE_ALL) $(LIB_HEADER_SERVER
 
 .PHONY: clean
 clean:
-	rm -f ./Client/client ./Server/server
+	rm -f client server
 
