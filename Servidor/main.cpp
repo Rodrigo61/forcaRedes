@@ -1,13 +1,18 @@
+#include <arpa/inet.h>
+#include "server_controller.hpp"
 #include <iostream>
-#include "Dicionario.hpp"
 
 using namespace std;
 
-int main()
-{
-  cout << Dicionario::get_was_init() << endl;
-  Dicionario::init("oi");
-  cout << Dicionario::get_was_init() << endl;
+int main (int argc, char **argv) {
 
-  return 0;
+  if (argc != 2) {
+    cerr << "Por favor, insira uma porta como argumento." << endl;
+    exit(1);
+  }
+
+  int port = atoi(argv[1]);
+
+  server_controller::start_server(port);
+
 }
