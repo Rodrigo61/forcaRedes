@@ -5,14 +5,23 @@ using namespace std;
 
 namespace protocol
 {
+  enum Bytecode : char {
+    NEWGAME = 1
+  };
 
   class protocol_message
   {
     string msg;
+    int type;
+    string parameter;
+
+    char extract_type(const string &raw_message);
+    string extract_parameter(const string &raw_message);
 
     public:
-      protocol_message(const string &message);
+      protocol_message(const string &raw_message);
       
+      string to_string();
       bool is_new_game();
       bool is_letter_try();
       bool is_init_failure();
@@ -27,6 +36,7 @@ namespace protocol
       string get_init_word();
       int get_init_hp();
       string which_type();
+      
     
   };
 
