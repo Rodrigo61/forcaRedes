@@ -90,7 +90,7 @@ namespace dictionary
     
     if (available_indexes.empty())
     {
-      for (int i = 0; i < vet_words.size(); ++i)
+      for (int i = 0; i < (int)vet_words.size(); ++i)
       {
         available_indexes.push_back(i);
       }
