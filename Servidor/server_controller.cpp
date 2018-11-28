@@ -1,21 +1,23 @@
 #include "server_controller.hpp"
 
 #define LISTENQ 10
+#define BUFFER_SZ 4096
 
 namespace server_controller
 {
   namespace
   {
-    int listenfd;                  
+    int listenfd;
+    char buffer[BUFFER_SZ]                  ;
     struct sockaddr_in servaddr;  
     set<int> set_connfd; 
-    map<int, Player> connfd_to_player;
+    map<int, player*> connfd_to_player;
     fd_set rset;
 
     void add_new_player(int connfd)
     {
       set_connfd.insert(connfd);
-      connfd_to_player[connfd] = new Player();
+      connfd_to_player[connfd] = new player();
     }
 
     void evaluate_welcome_socket()
@@ -40,10 +42,10 @@ namespace server_controller
       FD_ZERO(&rset);
     }
 
-    void evalute_player_msg(int connfd, string msg)
+    void evalute_player_msg(int connfd, const string &msg)
     {
-      Player &player = connfd_to_player[connfd];
-      player.evaluate(msg);
+      player *p = connfd_to_player[connfd];
+      p->evaluate(msg);
     }
 
     void erase_player (int connfd)
@@ -58,7 +60,7 @@ namespace server_controller
       {
         if (FD_ISSET(connfd, &rset))
         {
-          int msg_sz = read(sockfd, buffer, buffer_size);
+          int msg_sz = read(connfd, buffer, BUFFER_SZ);
           
           if (msg_sz == 0)
           {
@@ -67,9 +69,9 @@ namespace server_controller
           }
           else{
             buffer[msg_sz] = 0;
-            string response = evalute_player_msg(connfd);
+            string response = evalute_player_msg(buffer);
             // Envia ação de resposta do servidor
-            write(connfd, response.c_str(), responde.size());
+            write(connfd, response.c_str(), response.size());
           }
         }
       }
@@ -91,7 +93,7 @@ namespace server_controller
         set_players_to_IO_multiplex();
         
         /* Ativando o select de leitura*/
-        maxfdp1 = max(listenfd, *get_maximum(set_connfd));
+        int maxfdp1 = max(listenfd, *max_element(set_connfd));
         select(maxfdp1 + 1, &rset, NULL, NULL);
         
         /* Tratando os descriptors que estão sendo monitorados */
@@ -100,7 +102,7 @@ namespace server_controller
       }
     }
 
-    void init_welcome_socket()
+    void init_welcome_socket(int port)
     {
       listenfd = Socket(AF_INET, SOCK_STREAM, 0);
       servaddr = ServerSockaddrIn(AF_INET, INADDR_ANY, port);
@@ -112,7 +114,7 @@ namespace server_controller
   void start_server(int port)
   {
     reset_IO_multiplex();
-    init_welcome_socket();
+    init_welcome_socket(port);
     IO_multiplex_loop();
   }
 
