@@ -42,10 +42,10 @@ namespace server_controller
       FD_ZERO(&rset);
     }
 
-    void evalute_player_msg(int connfd, char *msg)
+    string evaluate_player_msg(int connfd, char *msg)
     {
       player *p = connfd_to_player[connfd];
-      p->evaluate_msg(msg);
+      return p->evaluate_msg(msg);
     }
 
     void erase_player (int connfd)
@@ -93,8 +93,8 @@ namespace server_controller
         set_players_to_IO_multiplex();
         
         /* Ativando o select de leitura*/
-        int maxfdp1 = max(listenfd, *max_element(set_connfd));
-        select(maxfdp1 + 1, &rset, NULL, NULL);
+        int maxfdp1 = max(listenfd, *set_connfd.rbegin());
+        select(maxfdp1 + 1, &rset, NULL, NULL, 0);
         
         /* Tratando os descriptors que estão sendo monitorados */
         evaluate_players_IO();

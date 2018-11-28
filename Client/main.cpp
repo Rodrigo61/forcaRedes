@@ -70,5 +70,5 @@ int connect_to_server(char* ip, int port){
 }
 
 void partida_simples(int connection){
-   write(protocol::protocol_message);
+
 }
