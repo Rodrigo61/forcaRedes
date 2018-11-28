@@ -5,7 +5,7 @@ LIB_CODE_SERVER = ./Server/dictionary.cpp
 LIB_HEADER_SERVER = ./Server/dictionary.hpp
 
 LIB_CODE_SERVER = ./Server/dictionary.cpp ./Server/game_master.cpp \
-./Server/player.cpp ./Server/server_controller.hpp ./Server/socket_helper.hpp
+./Server/player.cpp ./Server/server_controller.cpp ./Server/socket_helper.cpp
 LIB_HEADER_SERVER = ./Server/dictionary.hpp ./Server/game_master.hpp \
 ./Server/player.hpp ./Server/server_controller.hpp ./Server/socket_helper.hpp
 
