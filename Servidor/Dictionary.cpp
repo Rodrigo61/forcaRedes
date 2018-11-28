@@ -1,6 +1,6 @@
 #include "Dictionary.hpp"
 
-namespace Dictionary
+namespace dictionary
 {
   
   /*******************/
@@ -15,7 +15,7 @@ namespace Dictionary
     {
       if (!was_init)
       {
-        cerr << "Dictionary está sendo utilizado sem ter sido propriamente iniciado pela funcao init()" << endl;
+        cerr << "Dicionario está sendo utilizado sem ter sido propriamente iniciado pela funcao init()" << endl;
         exit(1);
       }    
     }
@@ -62,7 +62,7 @@ namespace Dictionary
     }
     else
     {
-      cerr << "Impossivel abrir o arquivo de dicinarios no caminho: " << file_path << endl;
+      cerr << "Impossivel abrir o arquivo de Dicionario no caminho: " << file_path << endl;
       exit(1);
     }
   }
