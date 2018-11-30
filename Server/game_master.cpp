@@ -52,10 +52,14 @@ namespace game_master
 
   int game_state::try_letter(char letter)
   {
+
+    letter = toupper(letter); // ignore case
+
     if (used_letter[(int)letter])
     {
       return USED_LETTER;
     }
+
     if (target_word.find(letter) == string::npos)
     {
       --hp;
@@ -72,7 +76,6 @@ namespace game_master
     }
 
     return CORRECT_LETTER;
-
   }
 
   string game_state::get_current_word()
