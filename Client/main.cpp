@@ -37,7 +37,6 @@ int main (int argc, char **argv)
         handle_option(opcao, server_conn_fd);
         if (!play_again()) break;
     }
-
 }
 
 int display_main_menu()
@@ -120,6 +119,7 @@ void print_game_screen(string target_word){
 }
 
 protocol::protocol_message send_message_to_server(int connection, string message){
+    cout << "SENT MESSAGE: " << message << endl;
     write(connection, message.c_str(), message.size());
     read(connection, BUFFER, MAX_BUFFER_LEN);
     string recv_str = BUFFER;

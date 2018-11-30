@@ -12,7 +12,7 @@ LIB_HEADER_SERVER = ./Server/dictionary.hpp ./Server/game_master.hpp \
 LIB_CODE_CLIENT =
 LIB_HEADER_CLIENT = 
 
-all: Client Server
+all: client server
 
 client: ./Client/main.cpp $(LIB_CODE_CLIENT) $(LIB_CODE_ALL) $(LIB_HEADER_CLIENT)  $(LIB_HEADER_ALL)
 	g++ $(CFLAGS) ./Client/main.cpp $(LIB_CODE_CLIENT) $(LIB_CODE_ALL) -o client

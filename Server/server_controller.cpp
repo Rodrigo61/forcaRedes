@@ -3,6 +3,8 @@
 #define LISTENQ 10
 #define BUFFER_SZ 4096
 
+#define db(x) cout << #x << " = " << x << endl;
+
 namespace server_controller
 {
   namespace
@@ -22,6 +24,7 @@ namespace server_controller
 
     void evaluate_welcome_socket()
     {
+      cout << "Novo jogador" << endl;
       if (FD_ISSET(listenfd, &rset))
       {
         struct sockaddr_in playeraddr;
@@ -93,7 +96,11 @@ namespace server_controller
         set_players_to_IO_multiplex();
         
         /* Ativando o select de leitura*/
-        int maxfdp1 = max(listenfd, *set_connfd.rbegin());
+        int maxfdp1 = listenfd;
+        if (!set_connfd.empty())
+        {
+          maxfdp1 = max(maxfdp1, *set_connfd.rbegin());
+        }
         select(maxfdp1 + 1, &rset, NULL, NULL, 0);
         
         /* Tratando os descriptors que estão sendo monitorados */

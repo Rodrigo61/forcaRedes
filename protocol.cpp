@@ -81,7 +81,7 @@ namespace protocol
   string create_new_game_success_msg() 
   { 
     stringstream ss;
-    ss << NEW_GAME_SUCCESS;
+    ss << (char)NEW_GAME_SUCCESS;
     return ss.str();
   }
 

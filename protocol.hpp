@@ -7,7 +7,7 @@ using namespace std;
 namespace protocol
 {
   enum Bytecode : char {
-    NEW_GAME,
+    NEW_GAME = 1,
     NEW_GAME_SUCCESS,
     NEW_GAME_FAILURE,
     SEND_LETTER,

@@ -3,9 +3,11 @@
 namespace game_master
 {
   
-  game_state::game_state(const string &word, int init_hp)
+  game_state::game_state() {}
+
+  void game_state::new_game(const string &target_word, int init_hp)
   {
-    target_word = word;
+    this->target_word = target_word;
     current_word = target_word;
     fill(current_word.begin(), current_word.end(), '_');
     fill(used_letter, used_letter + 255, 0);

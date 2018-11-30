@@ -1,11 +1,13 @@
 #include "player.hpp"
 
-void player::init_game(const string &word, int hp)
+void player::new_game(const string &word, int hp)
 {
-  gs = new game_master::game_state(word, hp);
+  gs->new_game(word, hp);
 }
 
-player::player() {}
+player::player() {
+  gs = new game_master::game_state();
+}
 
 string player::new_game_flow(protocol::protocol_message &msg)
 {
@@ -14,8 +16,10 @@ string player::new_game_flow(protocol::protocol_message &msg)
     return protocol::create_new_game_failure_msg();
   }
   
-  init_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
+  new_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
 
+  cout << "protocol::create_new_game_success_msg() = " << protocol::create_new_game_success_msg() << endl;
+  cout << "protocol::create_new_game_success_msg() = " << protocol::create_new_game_success_msg() << endl;
   return protocol::create_new_game_success_msg();  
 }
 

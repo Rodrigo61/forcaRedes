@@ -8,6 +8,10 @@ int Socket(int domain, int type, int protocol) {
       exit(1);
    }
 
+   // Evita o already bind address
+   int reuse = 1;
+   setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, (const char*)&reuse, sizeof(reuse));
+
    return sockfd;
 }
 

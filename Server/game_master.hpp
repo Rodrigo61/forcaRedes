@@ -27,8 +27,9 @@ namespace game_master
       bool in_progress;
       
     public:
-      game_state(const string &word, int init_hp);
+      game_state();
       
+      void new_game(const string &target_word, int init_hp);
       bool is_in_progress();
       bool has_won();
       bool has_lost();
