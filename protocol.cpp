@@ -43,11 +43,11 @@ namespace protocol
     return parameter[0]; // converto para char pegando apenas o primeiro char da string de parametro
   }
 
-  string protocol_message::get_target_word()
+  string protocol_message::get_current_word()
   {
     if (!is_new_game_success())
     {
-      cerr << "Método protocol_message::get_target_word() foi "
+      cerr << "Método protocol_message::get_current_word() foi "
            << "chamado sem a protocol_message ser do tipo NEW_GAME_SUCCESS." << endl;
       exit(1);
     }
