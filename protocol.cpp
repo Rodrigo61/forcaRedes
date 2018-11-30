@@ -74,7 +74,7 @@ namespace protocol
   string create_new_game_failure_msg() 
   { 
     stringstream ss;
-    ss << NEW_GAME_FAILURE;
+    ss << (char)NEW_GAME_FAILURE;
     return ss.str();
   }
   
@@ -87,7 +87,7 @@ namespace protocol
 
   string create_send_letter_msg(char letter) {
     stringstream ss;
-    ss << SEND_LETTER;
+    ss << (char)SEND_LETTER;
     ss << letter;
     return ss.str();
   };
@@ -95,21 +95,21 @@ namespace protocol
   string create_victory_msg() 
   { 
     stringstream ss;
-    ss << VICTORY;
+    ss << (char)VICTORY;
     return ss.str();
   }
 
   string create_unexpected_msg() 
   {
     stringstream ss;
-    ss << UNEXPECTED;
+    ss << (char)UNEXPECTED;
     return ss.str();
   }
 
   string create_used_letter_msg(char letter) 
   { 
     stringstream ss;
-    ss << USED_LETTER;
+    ss << (char)USED_LETTER;
     ss << "A letra '" << letter << "' já foi utilizada"; 
     return ss.str();
   }
@@ -117,7 +117,7 @@ namespace protocol
   string create_invalid_letter_msg(char letter, int hp) 
   { 
     stringstream ss;
-    ss << INVALID_LETTER;
+    ss << (char)INVALID_LETTER;
     ss << "O que foi enviado não é considerado uma letra válida. Certifique-se de enviar apenas um caracter simpls [a-z] ou [A-Z].\n"
          << "Você agora possui " << hp << " vidas.";
     return ss.str();
@@ -126,7 +126,7 @@ namespace protocol
   string create_wrong_letter_msg(char letter, int hp) 
   {
     stringstream ss;
-    ss << WRONG_LETTER;
+    ss << (char)WRONG_LETTER;
     ss << "A palavra não tem nenhuma letra '" << letter << "'.\n"
          << "Você agora possui " << hp << " vidas.";
     return ss.str();
@@ -135,7 +135,7 @@ namespace protocol
   string create_right_letter_msg(const string &current_word)
   {
     stringstream ss;
-    ss << RIGHT_LETTER;
+    ss << (char)RIGHT_LETTER;
     ss << current_word;
     return ss.str();
   }
@@ -143,7 +143,7 @@ namespace protocol
   string create_defeat_msg(int init_hp, const string &target_word) 
   {
     stringstream ss;
-    ss << DEFEAT;
+    ss << (char)DEFEAT;
     ss << "Forca! Você fez " << init_hp << " tentativas incorretas...\n"
           << "A palavra correta era \"" << target_word << "\", você perdeu!\n"
           << "Deseja jogar outra partida? digite \"SIM\"";
@@ -153,7 +153,7 @@ namespace protocol
   string create_new_game_msg()
   {
     stringstream ss;
-    ss << NEW_GAME;
+    ss << (char)NEW_GAME;
     return ss.str();
   }
 }
