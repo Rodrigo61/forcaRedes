@@ -6,7 +6,10 @@ using namespace std;
 namespace protocol
 {
   enum Bytecode : char {
-    NEWGAME = 1
+    NEWGAME = 1,
+    NEWGAME_SUCCESS = 2,
+    NEWGAME_FAILURE = 3,
+    SEND_LETTER = 4
   };
 
   class protocol_message
@@ -19,8 +22,10 @@ namespace protocol
     string extract_parameter(const string &raw_message);
 
     public:
+
       protocol_message(const string &raw_message);
-      
+      protocol_message();
+
       string to_string();
       bool is_new_game();
       bool is_letter_try();
@@ -53,5 +58,5 @@ namespace protocol
   string create_wrong_letter_msg();
   string create_unexpected_msg();
   string create_new_game_msg();
-  
+  string create_send_letter_msg(char);
 }

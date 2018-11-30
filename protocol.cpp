@@ -3,9 +3,6 @@
 namespace protocol
 {
 
-    enum Bytecode : char {
-        NEWGAME = 1
-    };
   /**********************************/
   /** BEGIN: protocol_message class**/
   /**********************************/
@@ -18,6 +15,10 @@ namespace protocol
   string protocol_message::extract_parameter(const string &raw_message)
   {
     return string(raw_message.begin() + 1, raw_message.end());
+  }
+
+  protocol_message::protocol_message(){
+
   }
 
   protocol_message::protocol_message(const string &message)
@@ -54,7 +55,12 @@ namespace protocol
 
   
   string create_init_failure_msg() { return "INIT_FAILURE"; }
-  string create_init_success_msg() { return "INIT_SUCCESS"; }
+  string create_init_success_msg() { return to_string(NEWGAME_SUCCESS); }
+  string create_send_letter_msg(char letter) {
+    string r = to_string(SEND_LETTER);
+    r += letter;
+    return r;
+  };
   string create_victory_msg() { return "Você adivinhou a palavra!"; }
   string create_restart_msg() { return "RESTART"; }
   string create_unexpected_msg() {}
