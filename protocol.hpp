@@ -9,13 +9,15 @@ namespace protocol
     NEW_GAME,
     NEW_GAME_SUCCESS,
     NEW_GAME_FAILURE,
+    SEND_LETTER,
     TRY_LETTER,
     INVALID_LETTER,
     WRONG_LETTER,
     USED_LETTER,
     VICTORY,
     DEFEAT,
-    RIGHT_LETTER
+    RIGHT_LETTER,
+    UNEXPECTED
   };
 
   class protocol_message
@@ -46,9 +48,7 @@ namespace protocol
       bool is_victory();
       bool is_defeat();
       bool is_right_letter();
-      
-      
-    
+      bool is_send_letter();
   };
 
   string create_new_game_success_msg();
