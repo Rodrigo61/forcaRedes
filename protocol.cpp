@@ -3,6 +3,7 @@
 namespace protocol
 {
 
+    
   /**********************************/
   /** BEGIN: protocol_message class**/
   /**********************************/
@@ -33,7 +34,7 @@ namespace protocol
     return ss.str();
   }
   
-  bool protocol_message::is_new_game(){}
+  bool protocol_message::is_new_game() { return type == NEWGAME; }
   bool protocol_message::is_letter_try(){}
   bool protocol_message::is_init_failure(){}
   bool protocol_message::is_init_success(){}
