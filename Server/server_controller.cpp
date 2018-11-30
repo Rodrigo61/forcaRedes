@@ -69,7 +69,7 @@ namespace server_controller
           }
           else{
             buffer[msg_sz] = 0;
-            string response = evalute_player_msg(connfd, buffer);
+            string response = evaluate_player_msg(connfd, buffer);
             // Envia ação de resposta do servidor
             write(connfd, response.c_str(), response.size());
           }

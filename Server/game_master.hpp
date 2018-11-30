@@ -34,12 +34,15 @@ namespace game_master
       bool has_lost();
       int try_letter(char letter);
       string get_current_word();
+      string get_target_word();
+      int get_init_hp();
+      int get_hp();
 
   };
 
 
   
 
-  bool valid_letter(const string &letter);
+  bool valid_letter(char letter);
  
 }

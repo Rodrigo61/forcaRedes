@@ -2,8 +2,7 @@
 
 namespace protocol
 {
-
-    
+  
   /**********************************/
   /** BEGIN: protocol_message class**/
   /**********************************/
@@ -18,13 +17,13 @@ namespace protocol
     return string(raw_message.begin() + 1, raw_message.end());
   }
 
-  protocol_message::protocol_message(){
-
-  }
+  protocol_message::protocol_message() {}
 
   protocol_message::protocol_message(const string &message)
   {
     msg = message;
+    parameter = extract_parameter(message);
+    type = extract_type(message);
   }
   
   string protocol_message::to_string()
@@ -33,40 +32,49 @@ namespace protocol
     ss << "Tipo = " << type << " Parametro = " << parameter;
     return ss.str();
   }
-  
-  bool protocol_message::is_new_game() { return type == NEWGAME; }
-  bool protocol_message::is_letter_try(){}
-  bool protocol_message::is_init_failure(){}
-  bool protocol_message::is_init_success(){}
-  bool protocol_message::is_invalid_letter(){}
-  bool protocol_message::is_wrong_letter(){}
-  bool protocol_message::is_already_used_letter(){}
-  bool protocol_message::is_victory(){}
-  bool protocol_message::is_defeat(){}
-  bool protocol_message::is_right_letter(){}
-  string protocol_message::get_tried_letter(){}
-  string protocol_message::get_init_word(){}
-  int protocol_message::get_init_hp(){}
-  string protocol_message::which_type(){}
-  
 
+  int protocol_message::get_type() 
+  { 
+    return type; 
+  }
+
+  char protocol_message::get_tried_letter()
+  {
+    return parameter[0]; // converto para char pegando apenas o primeiro char da string de parametro
+  }
+  
+  bool protocol_message::is_new_game() { return type == NEW_GAME; }
+  bool protocol_message::is_letter_try() { return type == TRY_LETTER; }
+  bool protocol_message::is_new_game_failure() { return type == NEW_GAME_FAILURE; }
+  bool protocol_message::is_new_game_success() { return type == NEW_GAME_SUCCESS; }
+  bool protocol_message::is_invalid_letter() { return type == INVALID_LETTER; }
+  bool protocol_message::is_wrong_letter() { return type == WRONG_LETTER; }
+  bool protocol_message::is_used_letter() { return type == USED_LETTER; }
+  bool protocol_message::is_victory() { return type == VICTORY; }
+  bool protocol_message::is_defeat() { return type == DEFEAT; }
+  bool protocol_message::is_right_letter() { return type == RIGHT_LETTER; }
+  
   /***************************/
   /** END: protocol_message **/
   /***************************/
-
   
-  string create_init_failure_msg() { return "INIT_FAILURE"; }
-  string create_init_success_msg() { return to_string(NEWGAME_SUCCESS); }
+  string create_new_game_failure_msg() { return "INIT_FAILURE"; }
+  
+  string create_new_game_success_msg() { return to_string(NEW_GAME_SUCCESS); }
+
   string create_send_letter_msg(char letter) {
-    string r = to_string(SEND_LETTER);
+    string r = to_string(TRY_LETTER);
     r += letter;
     return r;
   };
-  string create_victory_msg() { return "Você adivinhou a palavra!"; }
-  string create_restart_msg() { return "RESTART"; }
-  string create_unexpected_msg() {}
 
-  string create_already_used_letter_msg(char letter) 
+  string create_victory_msg() { return "Você adivinhou a palavra!"; }
+
+  string create_restart_msg() { return "RESTART"; }
+
+  string create_unexpected_msg() { return ""; }
+
+  string create_used_letter_msg(char letter) 
   { 
     stringstream ss;
     ss << "A letra '" << letter << "' já foi utilizada"; 
@@ -106,7 +114,7 @@ namespace protocol
   string create_new_game_msg()
   {
     stringstream ss;
-    ss << NEWGAME;
+    ss << NEW_GAME;
     return ss.str();
   }
   

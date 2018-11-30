@@ -6,10 +6,16 @@ using namespace std;
 namespace protocol
 {
   enum Bytecode : char {
-    NEWGAME = 1,
-    NEWGAME_SUCCESS = 2,
-    NEWGAME_FAILURE = 3,
-    SEND_LETTER = 4
+    NEW_GAME,
+    NEW_GAME_SUCCESS,
+    NEW_GAME_FAILURE,
+    TRY_LETTER,
+    INVALID_LETTER,
+    WRONG_LETTER,
+    USED_LETTER,
+    VICTORY,
+    DEFEAT,
+    RIGHT_LETTER
   };
 
   class protocol_message
@@ -27,35 +33,34 @@ namespace protocol
       protocol_message();
 
       string to_string();
+      char get_tried_letter();
+      int get_type();
+      string get_parameter();
       bool is_new_game();
       bool is_letter_try();
-      bool is_init_failure();
-      bool is_init_success();
+      bool is_new_game_success();
+      bool is_new_game_failure();
       bool is_invalid_letter();
       bool is_wrong_letter();
-      bool is_already_used_letter();
+      bool is_used_letter();
       bool is_victory();
       bool is_defeat();
       bool is_right_letter();
-      string get_tried_letter();
-      string get_init_word();
-      int get_init_hp();
-      string which_type();
+      
       
     
   };
 
-  string create_init_failure_msg();
-  string create_init_success_msg();
+  string create_new_game_success_msg();
+  string create_new_game_failure_msg();
   string create_victory_msg();
-  string create_defeat_msg();
+  string create_defeat_msg(int init_hp, const string &target_word);
   string create_already_used_letter_msg();
-  string create_invalid_letter_msg();
-  string create_reinit_msg();
+  string create_invalid_letter_msg(char letter, int hp);
   string create_confirmation_msg();
   string create_right_letter_msg(const string &current_word);
-  string create_used_letter_msg();
-  string create_wrong_letter_msg();
+  string create_used_letter_msg(char letter);
+  string create_wrong_letter_msg(char letter, int hp);
   string create_unexpected_msg();
   string create_new_game_msg();
   string create_send_letter_msg(char);

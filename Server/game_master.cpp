@@ -35,6 +35,21 @@ namespace game_master
     return hp == 0;
   }
 
+  string game_state::get_target_word()
+  {
+    return target_word;
+  }
+  
+  int game_state::get_init_hp()
+  {
+    return init_hp;
+  }
+
+  int game_state::get_hp()
+  {
+    return hp;
+  }
+
   int game_state::try_letter(char letter)
   {
     if (used_letter[(int)letter])
@@ -65,13 +80,8 @@ namespace game_master
     return current_word;
   }
 
-  bool valid_letter(const string &letter)
+  bool valid_letter(char letter)
   {
-    if (letter.size() != 1)
-    {
-      return false;
-    }
-
-    return isalpha(letter[0]);
+    return isalpha(letter);
   }
 }

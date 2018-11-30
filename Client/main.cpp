@@ -101,7 +101,7 @@ void simple_match_loop(int connection, string target_word){
             //Do something
         } else if (rcv_msg.is_wrong_letter()){
             //Do stuff
-        } else if (rcv_msg.is_already_used_letter()){
+        } else if (rcv_msg.is_used_letter()){
             //Do more stuff
         } else if (rcv_msg.is_defeat()){
             //Perdeu
