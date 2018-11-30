@@ -15,11 +15,9 @@ string player::new_game_flow(protocol::protocol_message &msg)
   {
     return protocol::create_new_game_failure_msg();
   }
-  
+ 
   new_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
 
-  cout << "protocol::create_new_game_success_msg() = " << protocol::create_new_game_success_msg() << endl;
-  cout << "protocol::create_new_game_success_msg() = " << protocol::create_new_game_success_msg() << endl;
   return protocol::create_new_game_success_msg();  
 }
 

@@ -3,8 +3,6 @@
 #define LISTENQ 10
 #define BUFFER_SZ 4096
 
-#define db(x) cout << #x << " = " << x << endl;
-
 namespace server_controller
 {
   namespace
@@ -24,9 +22,9 @@ namespace server_controller
 
     void evaluate_welcome_socket()
     {
-      cout << "Novo jogador" << endl;
       if (FD_ISSET(listenfd, &rset))
       {
+        cout << "Novo jogador" << endl;
         struct sockaddr_in playeraddr;
         socklen_t playeraddr_len = sizeof(playeraddr);
         int connfd = Accept(listenfd, (struct sockaddr *) &playeraddr, &playeraddr_len);
