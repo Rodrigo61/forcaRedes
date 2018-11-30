@@ -8,7 +8,7 @@ namespace server_controller
   namespace
   {
     int listenfd;
-    char buffer[BUFFER_SZ]                  ;
+    char buffer[BUFFER_SZ];
     struct sockaddr_in servaddr;  
     set<int> set_connfd; 
     map<int, player*> connfd_to_player;
@@ -42,10 +42,10 @@ namespace server_controller
       FD_ZERO(&rset);
     }
 
-    void evalute_player_msg(int connfd, const string &msg)
+    string evaluate_player_msg(int connfd, char *msg)
     {
       player *p = connfd_to_player[connfd];
-      p->evaluate(msg);
+      return p->evaluate_msg(msg);
     }
 
     void erase_player (int connfd)
@@ -69,7 +69,7 @@ namespace server_controller
           }
           else{
             buffer[msg_sz] = 0;
-            string response = evalute_player_msg(buffer);
+            string response = evaluate_player_msg(connfd, buffer);
             // Envia ação de resposta do servidor
             write(connfd, response.c_str(), response.size());
           }
@@ -93,8 +93,8 @@ namespace server_controller
         set_players_to_IO_multiplex();
         
         /* Ativando o select de leitura*/
-        int maxfdp1 = max(listenfd, *max_element(set_connfd));
-        select(maxfdp1 + 1, &rset, NULL, NULL);
+        int maxfdp1 = max(listenfd, *set_connfd.rbegin());
+        select(maxfdp1 + 1, &rset, NULL, NULL, 0);
         
         /* Tratando os descriptors que estão sendo monitorados */
         evaluate_players_IO();

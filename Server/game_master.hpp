@@ -14,7 +14,8 @@ namespace game_master
   const int CORRECT_LETTER = 0;
   const int USED_LETTER = 1;
   const int WRONG_LETTER = 2;
-
+  const int INIT_HP_DEFAULT = 6;
+  
   class game_state
   {
     private:
@@ -33,12 +34,15 @@ namespace game_master
       bool has_lost();
       int try_letter(char letter);
       string get_current_word();
+      string get_target_word();
+      int get_init_hp();
+      int get_hp();
 
   };
 
 
   
 
-  bool valid_letter(const string &letter);
+  bool valid_letter(char letter);
  
 }

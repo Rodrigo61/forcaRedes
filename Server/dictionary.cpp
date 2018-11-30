@@ -10,6 +10,7 @@ namespace dictionary
   {
     bool was_init = false;
     vector<string> vet_words;
+    vector<int> available_indexes;
 
     void check_init()
     {
@@ -21,22 +22,32 @@ namespace dictionary
     }
 
     // trim from start
-    void left_trim(string &s) {
+    void left_trim(string &s) 
+    {
       s.erase(s.begin(), find_if(s.begin(), s.end(),
               not1(ptr_fun<int, int>(isspace))));
     }
 
     // trim from end
-    void right_trim(string &s) {
+    void right_trim(string &s) 
+    {
       s.erase(find_if(s.rbegin(), s.rend(),
               not1(ptr_fun<int, int>(isspace))).base(), s.end());
     }
 
     // trim from both ends
-    void trim(string &s) {
+    void trim(string &s) 
+    {
       left_trim(s);
       right_trim(s);
     }
+
+    int my_random (int i) 
+    { 
+      std::srand (unsigned(time(0)));
+      return std::rand()%i;
+    }
+    
   }
 
   /********************/
@@ -77,13 +88,25 @@ namespace dictionary
   {
     check_init();
     
-    srand(time(NULL)); // random seed
-    int i = rand() % vet_words.size(); 
-    return vet_words[i];
+    if (available_indexes.empty())
+    {
+      for (int i = 0; i < (int)vet_words.size(); ++i)
+      {
+        available_indexes.push_back(i);
+      }
+      random_shuffle(available_indexes.begin(), available_indexes.end(), my_random);
+    }
+    
+    int index = available_indexes.back();
+    available_indexes.pop_back();
+
+    return vet_words[index];
   }
 
   string get_word_by_index(int index)
   {
+    check_init();
+
     return vet_words[index];
   }
 }
