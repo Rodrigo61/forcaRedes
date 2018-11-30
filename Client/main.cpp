@@ -12,7 +12,7 @@ void handle_option(int, int);
 bool play_again();
 int connect_to_server(char*, int);
 void simple_match(int);
-void simple_match_loop(int);
+void simple_match_loop(int, string);
 void print_game_screen(string);
 protocol::protocol_message send_message_to_server(int, string);
 
@@ -40,7 +40,6 @@ int main (int argc, char **argv)
 
 }
 
-
 int display_main_menu()
 {
     int aux;
@@ -50,7 +49,7 @@ int display_main_menu()
     cout << "3) jogar no modo multiplayer" << endl;
     cin  >> aux;
     return aux;
-};
+}
 
 void handle_option(int opcao, int connection){
     switch(opcao){
@@ -80,7 +79,7 @@ int connect_to_server(char* ip, int port){
 void simple_match(int connection){
     protocol::protocol_message msg = send_message_to_server(connection, protocol::create_new_game_msg());
 
-    if (msg.is_init_success()) {
+    if (msg.is_new_game_success()) {
         simple_match_loop(connection, msg.get_target_word());
     } else {
         cerr << "Não foi possível iniciar um jogo no servidor!" << endl;

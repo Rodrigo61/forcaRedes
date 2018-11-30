@@ -1,5 +1,6 @@
 #include <string>
 #include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -37,7 +38,7 @@ namespace protocol
       string to_string();
       char get_tried_letter();
       int get_type();
-      string get_parameter();
+      string get_target_word();
       bool is_new_game();
       bool is_letter_try();
       bool is_new_game_success();
