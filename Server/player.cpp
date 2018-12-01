@@ -36,10 +36,6 @@ string player::try_letter_flow(protocol::protocol_message &msg)
         score++;
         return protocol::create_victory_msg(gs->get_target_word());
       }
-      else if (gs->has_lost())
-      {
-        return protocol::create_defeat_msg(gs->get_init_hp(), gs->get_target_word());
-      }
       else
       {
         return protocol::create_right_letter_msg(gs->get_current_word());
@@ -51,7 +47,14 @@ string player::try_letter_flow(protocol::protocol_message &msg)
     }
     else
     {
-      return protocol::create_wrong_letter_msg(letter, gs->get_hp());
+      if (gs->has_lost())
+      {
+        return protocol::create_defeat_msg(gs->get_init_hp(), gs->get_target_word());
+      } 
+      else
+      {
+        return protocol::create_wrong_letter_msg(letter, gs->get_hp());
+      }
     }
 
   }
