@@ -10,7 +10,6 @@ namespace protocol
     NEW_GAME = 1,
     NEW_GAME_SUCCESS,
     NEW_GAME_FAILURE,
-    SEND_LETTER,
     TRY_LETTER,
     INVALID_LETTER,
     WRONG_LETTER,
@@ -38,7 +37,7 @@ namespace protocol
       string to_string();
       char get_tried_letter();
       int get_type();
-      string get_current_word();
+      string get_parameter();
       bool is_new_game();
       bool is_letter_try();
       bool is_new_game_success();

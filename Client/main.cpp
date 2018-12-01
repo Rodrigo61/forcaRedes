@@ -84,8 +84,8 @@ int connect_to_server(char* ip, int port){
 void simple_match(int connection){
     protocol::protocol_message msg = send_message_to_server(connection, protocol::create_new_game_msg());
 
-    if (true || msg.is_new_game_success()) {
-        simple_match_loop(connection, "" ,0);
+    if (msg.is_new_game_success()) {
+        simple_match_loop(connection, msg.get_parameter(), 6);
     } else {
         cerr << "Não foi possível iniciar um jogo no servidor!" << endl;
     }
@@ -95,26 +95,29 @@ void simple_match_loop(int connection, string current_word, int vidas){
     fill(LETTERS, LETTERS+255, false);
     char letter;
     string send_msg;
+    string word = current_word;
     protocol::protocol_message rcv_msg;
+    cout << "Voce possui " << vidas << " vidas" << endl;
     for (;;) {
-        letter = print_game_screen(current_word, vidas);
+        letter = print_game_screen(word, vidas);
         send_msg = protocol::create_send_letter_msg(toupper(letter));
         rcv_msg = send_message_to_server(connection, send_msg);
         if (rcv_msg.is_right_letter()){
             //Do something
-            current_word = rcv_msg.get_current_word();
+            word = rcv_msg.get_parameter();
         } else if (rcv_msg.is_wrong_letter()){
             //Do stuff
+            cout << rcv_msg.get_parameter();
             vidas--;
         } else if (rcv_msg.is_used_letter()){
             //Do more stuff
-//          cout << rcv_msg.get_message_string();
+            cout << rcv_msg.get_parameter();
         } else if (rcv_msg.is_defeat() || rcv_msg.is_victory()){
-//          cout << rcv_msg.get_message_string();
+            cout << rcv_msg.get_parameter();
             break;
         } else if (rcv_msg.is_invalid_letter()){
             //É Burro
-//          cout << rcv_msg.get_message_string();
+            cout << rcv_msg.get_parameter();
             vidas--;
         } else {
             cerr << "Oops! Algo inesperado aconteceu ao enviar uma letrar para o servidor!" << endl;
@@ -126,16 +129,15 @@ void simple_match_loop(int connection, string current_word, int vidas){
 char print_game_screen(string target_word, int vidas){
 
     char letter;
-    cout << "Voce ainda possui " << vidas << " vidas" << endl;
     cout << endl;
-    cout << target_word;
+    cout << target_word << endl;
 
     print_letters_table();
 
     cout << "Próxima letra: ";
     cin >> letter;
     letter = toupper(letter);
-    LETTERS[letter] = true;
+    LETTERS[(int)letter] = true;
     return letter;
 }
 
@@ -146,7 +148,7 @@ void print_letters_table(){
       for(int j =0; j < 7; j++){
 
           if(letter <= 'Z') {
-              if (LETTERS[letter]) {
+              if (LETTERS[(int)letter]) {
                   letter++;
                   cout << "|/";
               } else {
@@ -162,6 +164,7 @@ void print_letters_table(){
 }
 
 protocol::protocol_message send_message_to_server(int connection, string message){
+    fill(BUFFER, BUFFER+MAX_BUFFER_LEN, 0);
     write(connection, message.c_str(), message.size());
     read(connection, BUFFER, MAX_BUFFER_LEN);
     string recv_str = BUFFER;
