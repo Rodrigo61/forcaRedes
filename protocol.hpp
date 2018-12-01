@@ -51,7 +51,7 @@ namespace protocol
       bool is_send_letter();
   };
 
-  string create_new_game_success_msg();
+  string create_new_game_success_msg(const string &create_new_game_success_msg);
   string create_new_game_failure_msg();
   string create_victory_msg();
   string create_defeat_msg(int init_hp, const string &target_word);
