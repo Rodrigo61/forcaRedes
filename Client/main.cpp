@@ -14,7 +14,7 @@ bool play_again();
 int connect_to_server(char*, int);
 void simple_match(int);
 void simple_match_loop(int, string,int);
-string print_game_screen(string, int);
+string print_game_screen(string);
 void print_letters_table();
 protocol::protocol_message send_message_to_server(int, string);
 
@@ -100,7 +100,7 @@ void simple_match_loop(int connection, string current_word, int vidas){
     protocol::protocol_message rcv_msg;
     cout << "Voce possui " << vidas << " vidas" << endl;
     for (;;) {
-        guess = print_game_screen(word, vidas);
+        guess = print_game_screen(word);
         if(guess.size() == 1){
             send_msg = protocol::create_send_letter_msg(guess[0]);
         } else {
@@ -131,7 +131,7 @@ void simple_match_loop(int connection, string current_word, int vidas){
     }
 }
 
-string print_game_screen(string target_word, int vidas){
+string print_game_screen(string target_word){
 
     string guess;
     cout << endl;
