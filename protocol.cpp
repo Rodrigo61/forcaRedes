@@ -150,4 +150,11 @@ namespace protocol
     ss << (char)NEW_GAME;
     return ss.str();
   }
+
+  string create_try_word_msg(string word)
+  {
+    stringstream ss;
+    ss << (char)TRY_WORD << word;
+    return ss.str();
+  }
 }

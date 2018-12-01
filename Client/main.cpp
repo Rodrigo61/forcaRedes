@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "../protocol.hpp"
 #include "../socket_helper.hpp"
 #define HELP_SWITCH "-h"
@@ -93,14 +94,19 @@ void simple_match(int connection){
 
 void simple_match_loop(int connection, string current_word, int vidas){
     fill(LETTERS, LETTERS+255, false);
-    char letter;
+    string guess;
     string send_msg;
     string word = current_word;
     protocol::protocol_message rcv_msg;
     cout << "Voce possui " << vidas << " vidas" << endl;
     for (;;) {
-        letter = print_game_screen(word, vidas);
-        send_msg = protocol::create_send_letter_msg(toupper(letter));
+        guess = print_game_screen(word, vidas);
+        transform(guess.begin(), guess.end(), guess.begin(), ::toupper);
+        if(guess.size() == 1){
+            send_msg = protocol::create_send_letter_msg(guess[0]);
+        } else {
+            send_msg = protocol::create_try_word_msg(guess);
+        }
         rcv_msg = send_message_to_server(connection, send_msg);
         if (rcv_msg.is_right_letter()){
             //Do something
