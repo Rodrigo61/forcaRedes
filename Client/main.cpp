@@ -107,17 +107,17 @@ void simple_match_loop(int connection, string current_word, int vidas){
             word = rcv_msg.get_parameter();
         } else if (rcv_msg.is_wrong_letter()){
             //Do stuff
-            cout << rcv_msg.get_parameter();
+            cout << rcv_msg.get_parameter() << flush;
             vidas--;
         } else if (rcv_msg.is_used_letter()){
             //Do more stuff
-            cout << rcv_msg.get_parameter();
+            cout << rcv_msg.get_parameter() << flush;
         } else if (rcv_msg.is_defeat() || rcv_msg.is_victory()){
-            cout << rcv_msg.get_parameter();
+            cout << rcv_msg.get_parameter() << flush;
             break;
         } else if (rcv_msg.is_invalid_letter()){
             //É Burro
-            cout << rcv_msg.get_parameter();
+            cout << rcv_msg.get_parameter() << flush;
             vidas--;
         } else {
             cerr << "Oops! Algo inesperado aconteceu ao enviar uma letrar para o servidor!" << endl;
