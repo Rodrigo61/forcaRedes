@@ -7,8 +7,8 @@ Para compilar o projeto vá até a pasta raiz deste diretório
 e execute: ```make clean && make```, serão gerados dois executáveis:client e server
 
 # Executando o servidor
-Para excutar o servidor, use o comando: ```./server <porta>```
-o servidor vai escutar por conexões na <porta>
+Para excutar o servidor, use o comando: ```./server <porta> <arquivo_de_dicionario>```
+o servidor vai escutar por conexões na <porta> e vai ler as palavras do <arquivo_de_dicionario> para montar seu dicionario.
 
 # Executando o cliente
 Para executar o cliente, use o comando: ```./client <servidor> <porta>```
@@ -31,4 +31,5 @@ correta, o servidor indica em qual posição da palavra aquela letra se encontra
 perde uma vida, o jogo acaba quando o jogador descobrir a palavra ou perder todas
 as 6 vidas, o jogador tenta adicinhar uma letra digitando-a e pressionando ENTER,
 o jogador pode tentar adicinhar a palavra inteira de uma vez, mas se errar perde o jogo
-imediatamente.
+imediatamente. O jogador também é penalizado se tentar um caracter inválido. A pontuação
+do jogador é armazenada no servidor.

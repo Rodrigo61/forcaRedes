@@ -29,3 +29,13 @@ por sua simplicidade de implementação e também levando em consideração
 que a interface utilizada (terminal) só é atualizada quando o usuário interage
 com o programa, assim, não faria sentido o servidor enviar múltiplas mensagens
 já a tela não seria atualizada.
+
+# Servidor
+O servidor foi escrito utilizando multiplexação de entrada. A multiplexação 
+foi feita tanto no welcome socket quanto nas demais conexoes sockets com os
+clientes ativos. O servidor utiliza o IP do cliente para manter um registro
+com persistencia em RAM do cliente. O servidor também é responsável por deter-
+minar as regras do jogo, de modo que em geral o cliente praticamente se limita
+a mostrar para o usuário as respostas dadas pelo servidor. O servidor foi escrito
+de forma modularizada para que fosse mais fácil adicionar as demais features do
+jogo, infelizmente não foi possível completa-las.
