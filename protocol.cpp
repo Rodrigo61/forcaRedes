@@ -86,10 +86,13 @@ namespace protocol
     return ss.str();
   };
 
-  string create_victory_msg() 
+  string create_victory_msg(const string &target_word) 
   { 
     stringstream ss;
-    ss << (char)VICTORY;
+    ss << (char)VICTORY
+       << "Você adivinhou a palavra '" << target_word << "'! Parabéns!\n"
+       << "Deseja jogar outra partida, digite \"SIM\"\n";
+
     return ss.str();
   }
 

@@ -34,7 +34,7 @@ string player::try_letter_flow(protocol::protocol_message &msg)
       if (gs->has_won())
       {
         score++;
-        return protocol::create_victory_msg();
+        return protocol::create_victory_msg(gs->get_target_word());
       }
       else if (gs->has_lost())
       {

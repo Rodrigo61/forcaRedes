@@ -53,7 +53,7 @@ namespace protocol
 
   string create_new_game_success_msg(const string &create_new_game_success_msg);
   string create_new_game_failure_msg();
-  string create_victory_msg();
+  string create_victory_msg(const string &target_word);
   string create_defeat_msg(int init_hp, const string &target_word);
   string create_already_used_letter_msg();
   string create_invalid_letter_msg(char letter, int hp);
