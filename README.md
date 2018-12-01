@@ -21,7 +21,7 @@ Ao se conectar com o servidor, o cliente exibirá o menu principal
 2. Ser carrasco ao iniciar partida
 3. jogar no modo multiplayer
 
-O jogador deve digitar uma das opções correspondentes e pressionar <ENTER>
+O jogador deve digitar uma das opções correspondentes e pressionar ENTER
 
 # A Partida Simples
 Na partida simples, o jogador deve adivinhar uma palavra escolhida pelo servidor
@@ -29,6 +29,6 @@ para isso ele tenta adivinhar uma letra por vez, sendo que a cada tentativa
 correta, o servidor indica em qual posição da palavra aquela letra se encontra
 (se houver repetições, todas são reveladas) e a cada tentativa errada o jogador
 perde uma vida, o jogo acaba quando o jogador descobrir a palavra ou perder todas
-as 6 vidas, o jogador tenta adicinhar uma letra digitando-a e pressionando <ENTER>,
+as 6 vidas, o jogador tenta adicinhar uma letra digitando-a e pressionando ENTER,
 o jogador pode tentar adicinhar a palavra inteira de uma vez, mas se errar perde o jogo
 imediatamente.
