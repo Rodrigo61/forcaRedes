@@ -62,13 +62,13 @@ namespace game_master
       return USED_LETTER;
     }
 
+    used_letter[(int)letter] = true;
     if (target_word.find(letter) == string::npos)
     {
       --hp;
       return WRONG_LETTER;
     }
 
-    used_letter[(int)letter] = true;
     for (int i = 0; i < (int)target_word.size(); ++i)
     {
       if (target_word[i] == letter)

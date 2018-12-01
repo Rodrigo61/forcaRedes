@@ -43,15 +43,8 @@ namespace protocol
     return parameter[0]; // converto para char pegando apenas o primeiro char da string de parametro
   }
 
-  string protocol_message::get_target_word()
+  string protocol_message::get_parameter()
   {
-    if (!is_new_game_success())
-    {
-      cerr << "Método protocol_message::get_target_word() foi "
-           << "chamado sem a protocol_message ser do tipo NEW_GAME_SUCCESS." << endl;
-      exit(1);
-    }
-
     return parameter;
   }
   
@@ -65,7 +58,7 @@ namespace protocol
   bool protocol_message::is_victory() { return type == VICTORY; }
   bool protocol_message::is_defeat() { return type == DEFEAT; }
   bool protocol_message::is_right_letter() { return type == RIGHT_LETTER; }
-  bool protocol_message::is_send_letter() { return type == SEND_LETTER; }
+  bool protocol_message::is_send_letter() { return type == TRY_LETTER; }
   
   /***************************/
   /** END: protocol_message **/
@@ -88,7 +81,7 @@ namespace protocol
 
   string create_send_letter_msg(char letter) {
     stringstream ss;
-    ss << (char)SEND_LETTER;
+    ss << (char)TRY_LETTER;
     ss << letter;
     return ss.str();
   };
