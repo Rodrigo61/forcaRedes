@@ -78,10 +78,11 @@ namespace protocol
     return ss.str();
   }
   
-  string create_new_game_success_msg() 
+  string create_new_game_success_msg(const string &current_word) 
   { 
     stringstream ss;
     ss << (char)NEW_GAME_SUCCESS;
+    ss << current_word << endl;
     return ss.str();
   }
 
@@ -119,7 +120,7 @@ namespace protocol
     stringstream ss;
     ss << (char)INVALID_LETTER;
     ss << "O que foi enviado não é considerado uma letra válida. Certifique-se de enviar apenas um caracter simpls [a-z] ou [A-Z].\n"
-         << "Você agora possui " << hp << " vidas.";
+       << "Você agora possui " << hp << " vidas.";
     return ss.str();
   }
 
@@ -128,7 +129,7 @@ namespace protocol
     stringstream ss;
     ss << (char)WRONG_LETTER;
     ss << "A palavra não tem nenhuma letra '" << letter << "'.\n"
-         << "Você agora possui " << hp << " vidas.";
+       << "Você agora possui " << hp << " vidas.";
     return ss.str();
   }
 
@@ -145,8 +146,8 @@ namespace protocol
     stringstream ss;
     ss << (char)DEFEAT;
     ss << "Forca! Você fez " << init_hp << " tentativas incorretas...\n"
-          << "A palavra correta era \"" << target_word << "\", você perdeu!\n"
-          << "Deseja jogar outra partida? digite \"SIM\"";
+       << "A palavra correta era \"" << target_word << "\", você perdeu!\n"
+       << "Deseja jogar outra partida? digite \"SIM\"";
     return ss.str();
   }
 

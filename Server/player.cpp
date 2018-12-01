@@ -18,7 +18,7 @@ string player::new_game_flow(protocol::protocol_message &msg)
  
   new_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
 
-  return protocol::create_new_game_success_msg();  
+  return protocol::create_new_game_success_msg(gs->get_current_word());  
 }
 
 string player::try_letter_flow(protocol::protocol_message &msg)
