@@ -11,24 +11,37 @@ namespace server_controller
     char buffer[BUFFER_SZ];
     struct sockaddr_in servaddr;  
     set<int> set_connfd; 
-    map<int, player*> connfd_to_player;
+    map<string, player*> ip_to_player;
+    map<int, string> connfd_to_ip;
     fd_set rset;
 
-    void add_new_player(int connfd)
+    void add_new_player(int connfd, string ip)
     {
       set_connfd.insert(connfd);
-      connfd_to_player[connfd] = new player();
+      connfd_to_ip[connfd] = ip;
+
+      if (ip_to_player.find(ip) == ip_to_player.end())
+      {
+        cout << ip << " inédito ao servidor foi conectado." << endl;
+        ip_to_player[ip] = new player();
+      }   
+      else
+      {
+        cout << ip << " conectado ao servidor." << endl;
+      }
+      
     }
 
     void evaluate_welcome_socket()
     {
       if (FD_ISSET(listenfd, &rset))
       {
+        cout << "Novo jogador" << endl;
         struct sockaddr_in playeraddr;
         socklen_t playeraddr_len = sizeof(playeraddr);
         int connfd = Accept(listenfd, (struct sockaddr *) &playeraddr, &playeraddr_len);
-
-        add_new_player(connfd);
+        string ip = Get_IP(&playeraddr);
+        add_new_player(connfd, ip);
       }
     }
 
@@ -44,14 +57,21 @@ namespace server_controller
 
     string evaluate_player_msg(int connfd, char *msg)
     {
-      player *p = connfd_to_player[connfd];
+      string ip = connfd_to_ip[connfd];
+      player *p = ip_to_player[ip];
       return p->evaluate_msg(msg);
     }
 
-    void erase_player (int connfd)
+    void disconnect_player (int connfd)
     {
-      set_connfd.erase(connfd);
-      connfd_to_player.erase(connfd);
+      if (connfd_to_ip.find(connfd) != connfd_to_ip.end())
+      {
+        string ip = connfd_to_ip[connfd];
+        cout << ip << " foi desconectado." << endl;
+        player *p = ip_to_player[ip];
+        p->disconnect();
+        connfd_to_ip.erase(connfd);
+      }
     }
 
     void evaluate_players_IO()
@@ -65,7 +85,7 @@ namespace server_controller
           if (msg_sz == 0)
           {
             // Player fechou conexao TCP.
-            erase_player(connfd);
+            disconnect_player(connfd);
           }
           else{
             buffer[msg_sz] = 0;
@@ -93,7 +113,11 @@ namespace server_controller
         set_players_to_IO_multiplex();
         
         /* Ativando o select de leitura*/
-        int maxfdp1 = max(listenfd, *set_connfd.rbegin());
+        int maxfdp1 = listenfd;
+        if (!set_connfd.empty())
+        {
+          maxfdp1 = max(maxfdp1, *set_connfd.rbegin());
+        }
         select(maxfdp1 + 1, &rset, NULL, NULL, 0);
         
         /* Tratando os descriptors que estão sendo monitorados */

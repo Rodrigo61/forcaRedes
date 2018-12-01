@@ -7,6 +7,9 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <string>
+
+using namespace std;
 
 int Socket(int domain, int type, int protocol);
 
@@ -17,6 +20,8 @@ int Listen(int sockfd, int backlog);
 int Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
 int Connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+
+string Get_IP(struct sockaddr_in * addr);
 
 int Close(int fd);
 

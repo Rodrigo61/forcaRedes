@@ -8,6 +8,10 @@ int Socket(int domain, int type, int protocol) {
       exit(1);
    }
 
+   // Evita o already bind address
+   int reuse = 1;
+   setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, (const char*)&reuse, sizeof(reuse));
+
    return sockfd;
 }
 
@@ -99,4 +103,10 @@ struct sockaddr_in ClientSockaddrIn(int family, const char *ip, unsigned short p
    }
    
    return addr;
+}
+
+string Get_IP(struct sockaddr_in * addr)
+{
+   string ip = inet_ntoa(addr->sin_addr);
+	return ip;
 }

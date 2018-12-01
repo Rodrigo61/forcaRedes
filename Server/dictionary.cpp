@@ -21,25 +21,30 @@ namespace dictionary
       }    
     }
 
-    // trim from start
     void left_trim(string &s) 
     {
       s.erase(s.begin(), find_if(s.begin(), s.end(),
               not1(ptr_fun<int, int>(isspace))));
     }
 
-    // trim from end
     void right_trim(string &s) 
     {
       s.erase(find_if(s.rbegin(), s.rend(),
               not1(ptr_fun<int, int>(isspace))).base(), s.end());
     }
 
-    // trim from both ends
     void trim(string &s) 
     {
       left_trim(s);
       right_trim(s);
+    }
+
+    void to_upper(string &s)
+    {
+      for (char &c : s)
+      {
+        c = toupper(c);
+      }
     }
 
     int my_random (int i) 
@@ -65,6 +70,7 @@ namespace dictionary
       while (getline(file, line))
       {
         trim(line);
+        to_upper(line);
         vet_words.push_back(line);
       }
 

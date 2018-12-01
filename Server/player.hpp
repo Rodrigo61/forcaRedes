@@ -15,17 +15,19 @@ class player
 {
   private:
     string name;
-    int score;
+    int wins, losses;
     game_master::game_state *gs;
 
-    void init_game(const string &word, int hp);
+    void new_game(const string &word, int hp);
     string new_game_flow(protocol::protocol_message &msg);
     string try_letter_flow(protocol::protocol_message &msg);
+    string try_word_flow(protocol::protocol_message &msg);
     string unexpected_msg_flow();
 
   public:
     player();
 
     string evaluate_msg(const string &str_msg);
+    void disconnect();
      
 };

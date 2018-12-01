@@ -27,9 +27,11 @@ namespace game_master
       bool in_progress;
       
     public:
-      game_state(const string &word, int init_hp);
+      game_state();
       
+      void new_game(const string &target_word, int init_hp);
       bool is_in_progress();
+      void stop_game();
       bool has_won();
       bool has_lost();
       int try_letter(char letter);
@@ -37,11 +39,9 @@ namespace game_master
       string get_target_word();
       int get_init_hp();
       int get_hp();
+      bool is_correct_word(const string &tried_word);
 
   };
-
-
-  
 
   bool valid_letter(char letter);
  

@@ -1,11 +1,13 @@
 #include "player.hpp"
 
-void player::init_game(const string &word, int hp)
+void player::new_game(const string &word, int hp)
 {
-  gs = new game_master::game_state(word, hp);
+  gs->new_game(word, hp);
 }
 
-player::player() {}
+player::player() {
+  gs = new game_master::game_state();
+}
 
 string player::new_game_flow(protocol::protocol_message &msg)
 {
@@ -13,10 +15,26 @@ string player::new_game_flow(protocol::protocol_message &msg)
   {
     return protocol::create_new_game_failure_msg();
   }
-  
-  init_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
+ 
+  new_game(dictionary::get_random_word(), game_master::INIT_HP_DEFAULT);
 
-  return protocol::create_new_game_success_msg();  
+  return protocol::create_new_game_success_msg(gs->get_current_word());  
+}
+
+string player::try_word_flow(protocol::protocol_message &msg)
+{
+  string tried_word = msg.get_parameter();
+  if (gs->is_correct_word(tried_word))
+  {
+    ++wins;
+    gs->stop_game();
+    return protocol::create_victory_msg(gs->get_target_word(), wins, losses);
+  }
+
+  ++losses;
+  gs->stop_game();
+  return protocol::create_defeat_by_wrong_word_msg(tried_word, gs->get_target_word(), 
+                                                    wins, losses);
 }
 
 string player::try_letter_flow(protocol::protocol_message &msg)
@@ -31,12 +49,9 @@ string player::try_letter_flow(protocol::protocol_message &msg)
     {
       if (gs->has_won())
       {
-        score++;
-        return protocol::create_victory_msg();
-      }
-      else if (gs->has_lost())
-      {
-        return protocol::create_defeat_msg(gs->get_init_hp(), gs->get_target_word());
+        ++wins;
+        gs->stop_game();
+        return protocol::create_victory_msg(gs->get_target_word(), wins, losses);
       }
       else
       {
@@ -49,7 +64,17 @@ string player::try_letter_flow(protocol::protocol_message &msg)
     }
     else
     {
-      return protocol::create_wrong_letter_msg(letter, gs->get_hp());
+      if (gs->has_lost())
+      {
+        ++losses;
+        gs->stop_game();
+        return protocol::create_defeat_by_no_hp_msg(gs->get_init_hp(), gs->get_target_word(),
+                                                    wins, losses);
+      } 
+      else
+      {
+        return protocol::create_wrong_letter_msg(letter, gs->get_hp());
+      }
     }
 
   }
@@ -75,12 +100,25 @@ string player::evaluate_msg(const string &str_msg)
     return new_game_flow(msg);
   }
   
-  if (msg.is_letter_try())
+  if (msg.is_try_letter())
   {
     return try_letter_flow(msg);
+  }
+
+  if (msg.is_try_word())
+  {
+    return try_word_flow(msg);
   }
   
   return unexpected_msg_flow();
 }
 
+void player::disconnect()
+{
+  if (gs->is_in_progress())
+  {
+    ++losses;
+  }
 
+  gs->stop_game();
+}
