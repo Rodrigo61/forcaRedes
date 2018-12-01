@@ -14,6 +14,7 @@ namespace protocol
     INVALID_LETTER,
     WRONG_LETTER,
     USED_LETTER,
+    TRY_WORD,
     VICTORY,
     DEFEAT,
     RIGHT_LETTER,
@@ -64,4 +65,5 @@ namespace protocol
   string create_unexpected_msg();
   string create_new_game_msg();
   string create_send_letter_msg(char);
+  string create_try_word_msg(string);
 }
