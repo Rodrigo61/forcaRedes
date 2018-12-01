@@ -12,11 +12,17 @@ namespace game_master
     fill(current_word.begin(), current_word.end(), '_');
     fill(used_letter, used_letter + 255, 0);
     this->init_hp = hp = init_hp;
+    in_progress = true;
   }
 
   bool game_state::is_in_progress()
   {
     return in_progress;
+  }
+
+  void game_state::stop_game()
+  {
+    in_progress = false;
   }
 
   bool game_state::is_correct_word(const string &tried_word)

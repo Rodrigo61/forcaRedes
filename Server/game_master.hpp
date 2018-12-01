@@ -31,6 +31,7 @@ namespace game_master
       
       void new_game(const string &target_word, int init_hp);
       bool is_in_progress();
+      void stop_game();
       bool has_won();
       bool has_lost();
       int try_letter(char letter);

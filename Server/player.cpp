@@ -27,10 +27,12 @@ string player::try_word_flow(protocol::protocol_message &msg)
   if (gs->is_correct_word(tried_word))
   {
     ++wins;
+    gs->stop_game();
     return protocol::create_victory_msg(gs->get_target_word(), wins, losses);
   }
 
   ++losses;
+  gs->stop_game();
   return protocol::create_defeat_by_wrong_word_msg(tried_word, gs->get_target_word(), 
                                                     wins, losses);
 }
@@ -48,6 +50,7 @@ string player::try_letter_flow(protocol::protocol_message &msg)
       if (gs->has_won())
       {
         ++wins;
+        gs->stop_game();
         return protocol::create_victory_msg(gs->get_target_word(), wins, losses);
       }
       else
@@ -64,6 +67,7 @@ string player::try_letter_flow(protocol::protocol_message &msg)
       if (gs->has_lost())
       {
         ++losses;
+        gs->stop_game();
         return protocol::create_defeat_by_no_hp_msg(gs->get_init_hp(), gs->get_target_word(),
                                                     wins, losses);
       } 
@@ -109,4 +113,12 @@ string player::evaluate_msg(const string &str_msg)
   return unexpected_msg_flow();
 }
 
+void player::disconnect()
+{
+  if (gs->is_in_progress())
+  {
+    ++losses;
+  }
 
+  gs->stop_game();
+}

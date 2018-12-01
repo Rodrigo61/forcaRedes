@@ -104,3 +104,9 @@ struct sockaddr_in ClientSockaddrIn(int family, const char *ip, unsigned short p
    
    return addr;
 }
+
+string Get_IP(struct sockaddr_in * addr)
+{
+   string ip = inet_ntoa(addr->sin_addr);
+	return ip;
+}

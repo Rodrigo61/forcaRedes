@@ -28,5 +28,6 @@ class player
     player();
 
     string evaluate_msg(const string &str_msg);
+    void disconnect();
      
 };
