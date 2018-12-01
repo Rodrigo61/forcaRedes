@@ -19,6 +19,11 @@ namespace game_master
     return in_progress;
   }
 
+  bool game_state::is_correct_word(const string &tried_word)
+  {
+    return tried_word == target_word;
+  }
+
   bool game_state::has_won()
   {
     for (char c : target_word)

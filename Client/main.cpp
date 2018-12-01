@@ -102,7 +102,7 @@ void simple_match_loop(int connection, string current_word, int vidas){
     for (;;) {
         guess = print_game_screen(word, vidas);
         if(guess.size() == 1){
-            send_msg = protocol::create_send_letter_msg(guess[0]);
+            send_msg = protocol::create_try_letter_msg(guess[0]);
         } else {
             send_msg = protocol::create_try_word_msg(guess);
         }
@@ -117,7 +117,7 @@ void simple_match_loop(int connection, string current_word, int vidas){
         } else if (rcv_msg.is_used_letter()){
             //Do more stuff
             cout << rcv_msg.get_parameter() << flush;
-        } else if (rcv_msg.is_defeat() || rcv_msg.is_victory()){
+        } else if (rcv_msg.is_defeat_by_no_hp() || rcv_msg.is_victory() || rcv_msg.is_defeat_by_wrong_word()){
             cout << rcv_msg.get_parameter() << flush;
             break;
         } else if (rcv_msg.is_invalid_letter()){
@@ -139,7 +139,7 @@ string print_game_screen(string target_word, int vidas){
 
     print_letters_table();
 
-    cout << "Próxima letra: ";
+    cout << "Próxima letra (ou tente a palavra): ";
     cin >> guess;
     transform(guess.begin(), guess.end(), guess.begin(), ::toupper);
     if(guess.size() == 1){

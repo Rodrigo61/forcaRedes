@@ -38,11 +38,9 @@ namespace game_master
       string get_target_word();
       int get_init_hp();
       int get_hp();
+      bool is_correct_word(const string &tried_word);
 
   };
-
-
-  
 
   bool valid_letter(char letter);
  

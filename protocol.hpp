@@ -16,7 +16,8 @@ namespace protocol
     USED_LETTER,
     TRY_WORD,
     VICTORY,
-    DEFEAT,
+    DEFEAT_BY_NO_HP,
+    DEFEAT_BY_WRONG_WORD,
     RIGHT_LETTER,
     UNEXPECTED
   };
@@ -40,22 +41,24 @@ namespace protocol
       int get_type();
       string get_parameter();
       bool is_new_game();
-      bool is_letter_try();
+      bool is_try_letter();
+      bool is_try_word();
       bool is_new_game_success();
       bool is_new_game_failure();
       bool is_invalid_letter();
       bool is_wrong_letter();
       bool is_used_letter();
       bool is_victory();
-      bool is_defeat();
+      bool is_defeat_by_no_hp();
+      bool is_defeat_by_wrong_word();
       bool is_right_letter();
-      bool is_send_letter();
   };
 
   string create_new_game_success_msg(const string &create_new_game_success_msg);
   string create_new_game_failure_msg();
-  string create_victory_msg(const string &target_word);
-  string create_defeat_msg(int init_hp, const string &target_word);
+  string create_victory_msg(const string &target_word, int wins, int losses);
+  string create_defeat_by_no_hp_msg(int init_hp, const string &target_word, int wins, int losses);
+  string create_defeat_by_wrong_word_msg(const string &tried_word, const string &target_word, int wins, int losses);
   string create_already_used_letter_msg();
   string create_invalid_letter_msg(char letter, int hp);
   string create_confirmation_msg();
@@ -64,6 +67,6 @@ namespace protocol
   string create_wrong_letter_msg(char letter, int hp);
   string create_unexpected_msg();
   string create_new_game_msg();
-  string create_send_letter_msg(char);
+  string create_try_letter_msg(char);
   string create_try_word_msg(string);
 }

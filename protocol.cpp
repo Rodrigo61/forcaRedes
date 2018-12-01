@@ -49,16 +49,18 @@ namespace protocol
   }
   
   bool protocol_message::is_new_game() { return type == NEW_GAME; }
-  bool protocol_message::is_letter_try() { return type == TRY_LETTER; }
+  bool protocol_message::is_try_letter() { return type == TRY_LETTER; }
   bool protocol_message::is_new_game_failure() { return type == NEW_GAME_FAILURE; }
   bool protocol_message::is_new_game_success() { return type == NEW_GAME_SUCCESS; }
   bool protocol_message::is_invalid_letter() { return type == INVALID_LETTER; }
   bool protocol_message::is_wrong_letter() { return type == WRONG_LETTER; }
   bool protocol_message::is_used_letter() { return type == USED_LETTER; }
   bool protocol_message::is_victory() { return type == VICTORY; }
-  bool protocol_message::is_defeat() { return type == DEFEAT; }
+  bool protocol_message::is_defeat_by_no_hp() { return type == DEFEAT_BY_NO_HP; }
+  bool protocol_message::is_defeat_by_wrong_word() { return type == DEFEAT_BY_WRONG_WORD; }
   bool protocol_message::is_right_letter() { return type == RIGHT_LETTER; }
-  bool protocol_message::is_send_letter() { return type == TRY_LETTER; }
+  bool protocol_message::is_try_word() { return type == TRY_WORD; }
+  
   
   /***************************/
   /** END: protocol_message **/
@@ -79,18 +81,19 @@ namespace protocol
     return ss.str();
   }
 
-  string create_send_letter_msg(char letter) {
+  string create_try_letter_msg(char letter) {
     stringstream ss;
     ss << (char)TRY_LETTER;
     ss << letter;
     return ss.str();
   };
 
-  string create_victory_msg(const string &target_word) 
+  string create_victory_msg(const string &target_word, int wins, int losses) 
   { 
     stringstream ss;
     ss << (char)VICTORY
        << "Você adivinhou a palavra '" << target_word << "'! Parabéns!\n"
+       << "Você venceu " << wins << " jogo(s) e perdeu " << losses << ".\n" 
        << "Deseja jogar outra partida, digite \"SIM\"\n";
 
     return ss.str();
@@ -115,7 +118,7 @@ namespace protocol
   { 
     stringstream ss;
     ss << (char)INVALID_LETTER;
-    ss << "O que foi enviado não é considerado uma letra válida. Certifique-se de enviar apenas um caracter simpls [a-z] ou [A-Z].\n"
+    ss << "O que foi enviado não é considerado uma letra válida. Certifique-se de enviar apenas um caracter simples [a-z] ou [A-Z].\n"
        << "Você agora possui " << hp << " vidas.";
     return ss.str();
   }
@@ -137,12 +140,24 @@ namespace protocol
     return ss.str();
   }
 
-  string create_defeat_msg(int init_hp, const string &target_word) 
+  string create_defeat_by_no_hp_msg(int init_hp, const string &target_word, int wins, int losses) 
   {
     stringstream ss;
-    ss << (char)DEFEAT;
+    ss << (char)DEFEAT_BY_NO_HP;
     ss << "Forca! Você fez " << init_hp << " tentativas incorretas...\n"
        << "A palavra correta era \"" << target_word << "\", você perdeu!\n"
+       << "Você venceu " << wins << " jogo(s) e perdeu " << losses << ".\n" 
+       << "Deseja jogar outra partida? digite \"SIM\"";
+    return ss.str();
+  }
+
+  string create_defeat_by_wrong_word_msg(const string &tried_word, const string &target_word, int wins, int losses) 
+  {
+    stringstream ss;
+    ss << (char)DEFEAT_BY_WRONG_WORD;
+    ss << "Forca! Você tentou a palavra errada...\n"
+       << "A palavra correta era \"" << target_word << "\" e voce tentou \"" << tried_word << "\", você perdeu!\n"
+       << "Você venceu " << wins << " jogo(s) e perdeu " << losses << ".\n" 
        << "Deseja jogar outra partida? digite \"SIM\"";
     return ss.str();
   }
